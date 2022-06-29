@@ -1,10 +1,14 @@
 package lichessTest;
 import com.codeborne.selenide.SelenideElement;
 import core.BaseTest;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
+import static org.awaitility.Awaitility.await;
 
 public class LichessTest extends BaseTest {
 
@@ -14,10 +18,6 @@ public class LichessTest extends BaseTest {
     private final static String password = "trollivalli";
     private final static String falseLogin = "Buonapart91@mail.ru";
     private final static String falsePassword = "131313";
-
-
-
-
 
 
 @Test
@@ -37,14 +37,30 @@ public class LichessTest extends BaseTest {
     loginPage.validPassword(falsePassword);
     loginPage.cliclInputButton();
     UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
-    try {
-        Thread.sleep(1000);
-    } catch (InterruptedException e) {
-        throw new RuntimeException(e);
-    }
+    $("p.error").shouldBe(visible);
     boolean x = unsuccesLoginPage.checkErrorMassage();
     Assert.assertTrue(x);
 }
+
+@Test
+    public void spaceLogin(){
+    LoginPage loginPage = new LoginPage(Url);
+    loginPage.validLogin(login+ " ");
+    loginPage.validPassword(password+ " ");
+    loginPage.cliclInputButton();
+    UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+    $("p.error").shouldBe(visible);
+    boolean x = unsuccesLoginPage.checkErrorMassage();
+    Assert.assertTrue(x);
+    loginPage.validLogin(" "+login);
+    loginPage.validPassword(" "+password);
+    loginPage.cliclInputButton();
+    boolean y = unsuccesLoginPage.checkErrorMassage();
+    Assert.assertTrue(y);
+}
+
+//@Test
+
 
 
 
