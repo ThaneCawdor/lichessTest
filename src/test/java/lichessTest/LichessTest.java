@@ -20,51 +20,59 @@ public class LichessTest extends BaseTest {
     private final static String falsePassword = "131313";
 
 
-@Test
+    @Test
     public void checkAutoValidData() {
-    LoginPage loginPage = new LoginPage(Url);
-    loginPage.validLogin(login);
-    loginPage.validPassword(password);
-    loginPage.cliclInputButton();
-    MainPage mainPage = new MainPage();
-    mainPage.checkClick();
-}
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(login);
+        loginPage.validPassword(password);
+        loginPage.cliclInputButton();
+        MainPage mainPage = new MainPage();
+        mainPage.checkClick();
+    }
 
-@Test
-     public void checkAutoNotValidData(){
-    LoginPage loginPage = new LoginPage(Url);
-    loginPage.validLogin(falseLogin);
-    loginPage.validPassword(falsePassword);
-    loginPage.cliclInputButton();
-    UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
-    $("p.error").shouldBe(visible);
-    boolean x = unsuccesLoginPage.checkErrorMassage();
-    Assert.assertTrue(x);
-}
+    @Test
+    public void checkAutoNotValidData() {
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(falseLogin);
+        loginPage.validPassword(falsePassword);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        $("p.error").shouldBe(visible);
+        boolean x = unsuccesLoginPage.checkErrorMassage();
+        Assert.assertTrue(x);
+    }
 
-@Test
-    public void spaceLogin(){
-    LoginPage loginPage = new LoginPage(Url);
-    loginPage.validLogin(login+ " ");
-    loginPage.validPassword(password+ " ");
-    loginPage.cliclInputButton();
-    UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
-    $("p.error").shouldBe(visible);
-    boolean x = unsuccesLoginPage.checkErrorMassage();
-    Assert.assertTrue(x);
-    loginPage.validLogin(" "+login);
-    loginPage.validPassword(" "+password);
-    loginPage.cliclInputButton();
-    boolean y = unsuccesLoginPage.checkErrorMassage();
-    Assert.assertTrue(y);
-}
+    @Test
+    public void spaceAfter() {
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(login + " ");
+        loginPage.validPassword(password + " ");
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        $("p.error").shouldBe(visible);
+        boolean x = unsuccesLoginPage.checkErrorMassage();
+        Assert.assertTrue(x);
+    }
 
+    @Test
+    public void spaceBefoe() {
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(" " + login);
+        loginPage.validPassword(" " + password);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        $("p.error").shouldBe(visible);
+        boolean y = unsuccesLoginPage.checkErrorMassage();
+        Assert.assertTrue(y);
+    }
+
+
+}
 //@Test
 
 
 
 
-    }
 
 
 
