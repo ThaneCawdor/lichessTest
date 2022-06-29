@@ -4,23 +4,24 @@ import com.codeborne.selenide.SelenideElement;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 import static org.awaitility.Awaitility.with;
 
 public class UnsuccesLoginPage {
-    public final SelenideElement errorMessage = $x("//p[@class='error']");
-    //public  final SelenideElement errorMessagecss =$x("p.error");
+
+    private final SelenideElement errorMessage = $("p.error");
+    private final SelenideElement findMe = $("#main-wrap > main > h1");
 
 
-    public boolean checkErrorMassage() {
-        return errorMessage.isDisplayed();
+    public void checkErrorMassage() {
+        $("p.error").shouldBe(visible);
   }
 
-
-
-
-
-
+    public void checkFindfMe(){
+        $("#main-wrap > main > h1").shouldBe(visible);
+    }
 
 
 

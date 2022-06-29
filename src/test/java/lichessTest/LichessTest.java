@@ -18,6 +18,14 @@ public class LichessTest extends BaseTest {
     private final static String password = "trollivalli";
     private final static String falseLogin = "Buonapart91@mail.ru";
     private final static String falsePassword = "131313";
+    private final static String specialCharacters = "!»№;%:?*()_+.,}{}[];:’”`~";
+    private final static String registerLogin = "NaaaAaaa";
+    private final static String registerPassword = "troLLivalli";
+    private final static String translitLogin = "Naaaaaaа";
+    private final static String translitPassword = "trollivаlli";
+    private final static String sqlInjection = "a’ OR 1=1;--";
+
+
 
 
     @Test
@@ -27,7 +35,7 @@ public class LichessTest extends BaseTest {
         loginPage.validPassword(password);
         loginPage.cliclInputButton();
         MainPage mainPage = new MainPage();
-        mainPage.checkClick();
+        mainPage.checkUserTag();
     }
 
     @Test
@@ -37,9 +45,19 @@ public class LichessTest extends BaseTest {
         loginPage.validPassword(falsePassword);
         loginPage.cliclInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
-        $("p.error").shouldBe(visible);
-        boolean x = unsuccesLoginPage.checkErrorMassage();
-        Assert.assertTrue(x);
+        unsuccesLoginPage.checkErrorMassage();
+
+    }
+
+    @Test
+    public void checkNotValidOne(){
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(login);
+        loginPage.validPassword(falsePassword);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
+
     }
 
     @Test
@@ -49,9 +67,7 @@ public class LichessTest extends BaseTest {
         loginPage.validPassword(password + " ");
         loginPage.cliclInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
-        $("p.error").shouldBe(visible);
-        boolean x = unsuccesLoginPage.checkErrorMassage();
-        Assert.assertTrue(x);
+        unsuccesLoginPage.checkErrorMassage();
     }
 
     @Test
@@ -61,14 +77,97 @@ public class LichessTest extends BaseTest {
         loginPage.validPassword(" " + password);
         loginPage.cliclInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
-        $("p.error").shouldBe(visible);
-        boolean y = unsuccesLoginPage.checkErrorMassage();
-        Assert.assertTrue(y);
+        unsuccesLoginPage.checkErrorMassage();
+    }
+
+    @Test
+    public void specChar(){
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(specialCharacters);
+        loginPage.validPassword(specialCharacters);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
+    }
+
+    @Test
+    public void registerLogin(){
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(registerLogin);
+        loginPage.validPassword(password);
+        loginPage.cliclInputButton();
+        MainPage mainPage = new MainPage();
+        mainPage.checkUserTag();
+
+    }
+
+    @Test
+    public void registerPassword(){
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(login);
+        loginPage.validPassword(registerPassword);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
+    }
+
+    @Test
+    public void emptyInput(){
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkFindfMe();
+
+    }
+
+    @Test
+    public void oneOfIsEmpty(){
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(login);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkFindfMe();
+    }
+
+    @Test
+    public void translitLogin(){
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(translitLogin);
+        loginPage.validPassword(password);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
+    }
+
+    @Test
+    public void translitPassword(){
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(login);
+        loginPage.validPassword(translitPassword);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
+    }
+
+    @Test
+    public void sqlInjection(){
+        LoginPage loginPage = new LoginPage(Url);
+        loginPage.validLogin(sqlInjection);
+        loginPage.validPassword(password);
+        loginPage.cliclInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
     }
 
 
+
+
+
+
+
+
 }
-//@Test
+
 
 
 
