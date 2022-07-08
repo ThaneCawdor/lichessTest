@@ -1,33 +1,19 @@
 package lichessTest;
 
 import core.BaseTest;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import static lichessTest.Storage.*;
+
 @DisplayName(value = "Тесты для формы авторизации lichess.org")
 public class LichessTest extends BaseTest {
-    public final static String Url = "https://lichess.org/login?referrer=/";
-    private final static String login = "Naaaaaaa";
-    private final static String password = "trollivalli";
-    private final static String specialCharacters = "!»№;%:?*()_+.,}{}[];:’”`~";
-    private final static String registerLogin = "NaaaAaaa";
-    private final static String registerPassword = "troLLivalli";
-    private final static String translitLogin = "Naaaaaaа";
-    private final static String translitPassword = "trollivаlli";
-    private final static String sqlInjection = "a’ OR 1=1;--";
-    private final static String randomString = RandomStringUtils.randomAlphanumeric(10);
    @BeforeAll
-   static void prepareLoginPage(){
-        LoginPage loginPage = new LoginPage(Url);
-    }
+   static void prepareLoginPage() {
+       LoginPage loginPage = new LoginPage(Url);
+   }
     LoginPage loginPage = new LoginPage(Url);
-    /*@ParameterizedTest
-    @ValueSource({"Naaaaaaa","trollivalli","Buonapart91@mail.ru","131313"})
-    public void pushInBox(){
-       loginPage.
-       loginPage.
-    }*/
+
     @DisplayName(value = "Авторизация валидными данными")
     @Test
     public void checkAutoValidData() {
