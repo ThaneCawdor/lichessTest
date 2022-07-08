@@ -3,7 +3,7 @@ import core.BaseTest;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-@DisplayName(value = "Тесты формы авторизации lichess.org")
+@DisplayName(value = "Тесты для формы авторизации lichess.org")
 public class LichessTest extends BaseTest {
     public final static String Url = "https://lichess.org/login?referrer=/";
     private final static String login = "Naaaaaaa";
