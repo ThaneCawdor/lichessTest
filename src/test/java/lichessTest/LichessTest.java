@@ -1,22 +1,14 @@
 package lichessTest;
-import com.codeborne.selenide.SelenideElement;
 import core.BaseTest;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Assert;
 import org.junit.Test;
-
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
-import static org.awaitility.Awaitility.await;
-
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+@DisplayName(value = "Тесты формы авторизации lichess.org")
 public class LichessTest extends BaseTest {
-
-
-    private final static String Url = "https://lichess.org/login?referrer=/";
+    public final static String Url = "https://lichess.org/login?referrer=/";
     private final static String login = "Naaaaaaa";
     private final static String password = "trollivalli";
-    private final static String falseLogin = "Buonapart91@mail.ru";
+    private final static String falseLogin = "Buonapart91@mail.sru";
     private final static String falsePassword = "131313";
     private final static String specialCharacters = "!»№;%:?*()_+.,}{}[];:’”`~";
     private final static String registerLogin = "NaaaAaaa";
@@ -24,148 +16,166 @@ public class LichessTest extends BaseTest {
     private final static String translitLogin = "Naaaaaaа";
     private final static String translitPassword = "trollivаlli";
     private final static String sqlInjection = "a’ OR 1=1;--";
-
-
-
-
+    LoginPage loginPage = new LoginPage(Url);
+   @BeforeAll
+   static void prepareLogin(){
+        LoginPage loginPage = new LoginPage(Url);
+    }
+    /*@ParameterizedTest
+    @ValueSource({"Naaaaaaa","trollivalli","Buonapart91@mail.ru","131313"})
+    public void pushInBox(){
+       loginPage.
+       loginPage.
+    }*/
+    @DisplayName(value = "Авторизация валидными данными")
     @Test
     public void checkAutoValidData() {
-        LoginPage loginPage = new LoginPage(Url);
         loginPage.validLogin(login);
         loginPage.validPassword(password);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         MainPage mainPage = new MainPage();
         mainPage.checkUserTag();
     }
-
+    @DisplayName(value = "Авторизация невалидными данными")
     @Test
     public void checkAutoNotValidData() {
-        LoginPage loginPage = new LoginPage(Url);
         loginPage.validLogin(falseLogin);
         loginPage.validPassword(falsePassword);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
-
     }
-
+    @DisplayName(value = "Неверный пароль")
     @Test
-    public void checkNotValidOne(){
-        LoginPage loginPage = new LoginPage(Url);
+    public void checkNotValidOneP(){
         loginPage.validLogin(login);
         loginPage.validPassword(falsePassword);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
-
     }
-
+    @DisplayName(value = "Неверный логин")
     @Test
-    public void spaceAfter() {
-        LoginPage loginPage = new LoginPage(Url);
+    public void checkNotValidLogin() {
+        loginPage.validLogin(falseLogin);
+        loginPage.validPassword(password);
+        loginPage.clickInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
+    }
+    @DisplayName(value = "Пробел после логина")
+    @Test
+    public void spaceAfterLogin() {
         loginPage.validLogin(login + " ");
-        loginPage.validPassword(password + " ");
-        loginPage.cliclInputButton();
+        loginPage.validPassword(password);
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-
+    @DisplayName(value = "Пробел после пароля")
     @Test
-    public void spaceBefoe() {
-        LoginPage loginPage = new LoginPage(Url);
-        loginPage.validLogin(" " + login);
-        loginPage.validPassword(" " + password);
-        loginPage.cliclInputButton();
+    public void spaceAfterPassword() {
+        loginPage.validLogin(login);
+        loginPage.validPassword(password + " ");
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-
+    @DisplayName(value = "Пробел до логина")
+    @Test
+    public void spaceBeforeLogin() {
+        loginPage.validLogin(" " + login);
+        loginPage.validPassword(password);
+        loginPage.clickInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
+    }
+    @DisplayName(value = "Пробел до пароля")
+    @Test
+    public void spaceBeforePassword() {
+        loginPage.validLogin(login);
+        loginPage.validPassword(" " + password);
+        loginPage.clickInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
+    }
+    @DisplayName(value = "Спец символы")
     @Test
     public void specChar(){
-        LoginPage loginPage = new LoginPage(Url);
         loginPage.validLogin(specialCharacters);
         loginPage.validPassword(specialCharacters);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-
+    @DisplayName(value = "Чувствительность логина к регистру")
     @Test
     public void registerLogin(){
-        LoginPage loginPage = new LoginPage(Url);
         loginPage.validLogin(registerLogin);
         loginPage.validPassword(password);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         MainPage mainPage = new MainPage();
         mainPage.checkUserTag();
-
     }
-
+    @DisplayName(value = "Чувствительность пароля к регистру")
     @Test
     public void registerPassword(){
-        LoginPage loginPage = new LoginPage(Url);
         loginPage.validLogin(login);
         loginPage.validPassword(registerPassword);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-
+    @DisplayName(value = "Пустой ввод")
     @Test
     public void emptyInput(){
-        LoginPage loginPage = new LoginPage(Url);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkFindfMe();
-
     }
-
+    @DisplayName(value = "Пустой ввод-пароль")
     @Test
-    public void oneOfIsEmpty(){
-        LoginPage loginPage = new LoginPage(Url);
+    public void oneOfIsEmptyPassword(){
         loginPage.validLogin(login);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkFindfMe();
     }
-
+    @DisplayName(value = "Пустой ввод-логин")
+    @Test
+    public void oneOfIsEmptyLogin(){
+        loginPage.validPassword(password);
+        loginPage.clickInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkFindfMe();
+    }
+    @DisplayName(value = "Чувствительность к транслиту-логин")
     @Test
     public void translitLogin(){
-        LoginPage loginPage = new LoginPage(Url);
         loginPage.validLogin(translitLogin);
         loginPage.validPassword(password);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-
+    @DisplayName(value = "Чувствительность к транслиту-пароль")
     @Test
     public void translitPassword(){
-        LoginPage loginPage = new LoginPage(Url);
         loginPage.validLogin(login);
         loginPage.validPassword(translitPassword);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-
+    @DisplayName(value = "SQL иньекция логин")
     @Test
     public void sqlInjection(){
-        LoginPage loginPage = new LoginPage(Url);
         loginPage.validLogin(sqlInjection);
         loginPage.validPassword(password);
-        loginPage.cliclInputButton();
+        loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-
-
-
-
-
-
-
-
 }
 
 
