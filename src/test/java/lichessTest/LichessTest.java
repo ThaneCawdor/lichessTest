@@ -1,5 +1,7 @@
 package lichessTest;
+
 import core.BaseTest;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -8,19 +10,18 @@ public class LichessTest extends BaseTest {
     public final static String Url = "https://lichess.org/login?referrer=/";
     private final static String login = "Naaaaaaa";
     private final static String password = "trollivalli";
-    private final static String falseLogin = "Buonapart91@mail.sru";
-    private final static String falsePassword = "131313";
     private final static String specialCharacters = "!»№;%:?*()_+.,}{}[];:’”`~";
     private final static String registerLogin = "NaaaAaaa";
     private final static String registerPassword = "troLLivalli";
     private final static String translitLogin = "Naaaaaaа";
     private final static String translitPassword = "trollivаlli";
     private final static String sqlInjection = "a’ OR 1=1;--";
-    LoginPage loginPage = new LoginPage(Url);
+    private final static String randomString = RandomStringUtils.randomAlphanumeric(10);
    @BeforeAll
-   static void prepareLogin(){
+   static void prepareLoginPage(){
         LoginPage loginPage = new LoginPage(Url);
     }
+    LoginPage loginPage = new LoginPage(Url);
     /*@ParameterizedTest
     @ValueSource({"Naaaaaaa","trollivalli","Buonapart91@mail.ru","131313"})
     public void pushInBox(){
@@ -30,8 +31,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Авторизация валидными данными")
     @Test
     public void checkAutoValidData() {
-        loginPage.validLogin(login);
-        loginPage.validPassword(password);
+        loginPage.setValueLogin(login);
+        loginPage.setValuePassword(password);
         loginPage.clickInputButton();
         MainPage mainPage = new MainPage();
         mainPage.checkUserTag();
@@ -39,8 +40,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Авторизация невалидными данными")
     @Test
     public void checkAutoNotValidData() {
-        loginPage.validLogin(falseLogin);
-        loginPage.validPassword(falsePassword);
+        loginPage.setValueLogin(randomString);
+        loginPage.setValuePassword(randomString);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -48,8 +49,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Неверный пароль")
     @Test
     public void checkNotValidOneP(){
-        loginPage.validLogin(login);
-        loginPage.validPassword(falsePassword);
+        loginPage.setValueLogin(login);
+        loginPage.setValuePassword(randomString);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -57,8 +58,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Неверный логин")
     @Test
     public void checkNotValidLogin() {
-        loginPage.validLogin(falseLogin);
-        loginPage.validPassword(password);
+        loginPage.setValueLogin(randomString);
+        loginPage.setValuePassword(password);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -66,8 +67,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Пробел после логина")
     @Test
     public void spaceAfterLogin() {
-        loginPage.validLogin(login + " ");
-        loginPage.validPassword(password);
+        loginPage.setValueLogin(login + " ");
+        loginPage.setValuePassword(password);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -75,8 +76,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Пробел после пароля")
     @Test
     public void spaceAfterPassword() {
-        loginPage.validLogin(login);
-        loginPage.validPassword(password + " ");
+        loginPage.setValueLogin(login);
+        loginPage.setValuePassword(password + " ");
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -84,8 +85,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Пробел до логина")
     @Test
     public void spaceBeforeLogin() {
-        loginPage.validLogin(" " + login);
-        loginPage.validPassword(password);
+        loginPage.setValueLogin(" " + login);
+        loginPage.setValuePassword(password);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -93,8 +94,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Пробел до пароля")
     @Test
     public void spaceBeforePassword() {
-        loginPage.validLogin(login);
-        loginPage.validPassword(" " + password);
+        loginPage.setValueLogin(login);
+        loginPage.setValuePassword(" " + password);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -102,8 +103,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Спец символы")
     @Test
     public void specChar(){
-        loginPage.validLogin(specialCharacters);
-        loginPage.validPassword(specialCharacters);
+        loginPage.setValueLogin(specialCharacters);
+        loginPage.setValuePassword(specialCharacters);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -111,8 +112,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Чувствительность логина к регистру")
     @Test
     public void registerLogin(){
-        loginPage.validLogin(registerLogin);
-        loginPage.validPassword(password);
+        loginPage.setValueLogin(registerLogin);
+        loginPage.setValuePassword(password);
         loginPage.clickInputButton();
         MainPage mainPage = new MainPage();
         mainPage.checkUserTag();
@@ -120,8 +121,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Чувствительность пароля к регистру")
     @Test
     public void registerPassword(){
-        loginPage.validLogin(login);
-        loginPage.validPassword(registerPassword);
+        loginPage.setValueLogin(login);
+        loginPage.setValuePassword(registerPassword);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -136,7 +137,7 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Пустой ввод-пароль")
     @Test
     public void oneOfIsEmptyPassword(){
-        loginPage.validLogin(login);
+        loginPage.setValueLogin(login);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkFindfMe();
@@ -144,7 +145,7 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Пустой ввод-логин")
     @Test
     public void oneOfIsEmptyLogin(){
-        loginPage.validPassword(password);
+        loginPage.setValuePassword(password);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkFindfMe();
@@ -152,8 +153,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Чувствительность к транслиту-логин")
     @Test
     public void translitLogin(){
-        loginPage.validLogin(translitLogin);
-        loginPage.validPassword(password);
+        loginPage.setValueLogin(translitLogin);
+        loginPage.setValuePassword(password);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -161,8 +162,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "Чувствительность к транслиту-пароль")
     @Test
     public void translitPassword(){
-        loginPage.validLogin(login);
-        loginPage.validPassword(translitPassword);
+        loginPage.setValueLogin(login);
+        loginPage.setValuePassword(translitPassword);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
@@ -170,8 +171,8 @@ public class LichessTest extends BaseTest {
     @DisplayName(value = "SQL иньекция логин")
     @Test
     public void sqlInjection(){
-        loginPage.validLogin(sqlInjection);
-        loginPage.validPassword(password);
+        loginPage.setValueLogin(sqlInjection);
+        loginPage.setValuePassword(password);
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();

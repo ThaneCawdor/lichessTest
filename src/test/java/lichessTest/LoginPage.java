@@ -1,4 +1,5 @@
 package lichessTest;
+
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$x;
@@ -16,10 +17,10 @@ public class LoginPage {
     /**
      Ввод валидных данных, клик на кнопку вход
     */
-    public void validLogin(String login){
+    public void setValueLogin(String login){
         loginBox.setValue(login);
     }
-    public void validPassword(String password){
+    public void setValuePassword(String password){
         passwordBox.setValue(password);
     }
     public void clickInputButton(){
