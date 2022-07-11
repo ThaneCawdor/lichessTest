@@ -2,7 +2,7 @@ package lichessTest;
 
 import org.apache.commons.lang3.RandomStringUtils;
 public class Storage {
-    public final static String Url = "https://lichess.org/login?referrer=/";
+    public final static String Url = "https://lichess.org/login?referrer=/ru";
     public final static String login = "Naaaaaaa";
     public final static String password = "trollivalli";
     public final static String specialCharacters = "!»№;%:?*()_+.,}{}[];:’”`~";
