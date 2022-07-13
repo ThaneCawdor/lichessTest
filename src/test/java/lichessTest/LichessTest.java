@@ -1,6 +1,7 @@
 package lichessTest;
 
 import core.BaseTest;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import static lichessTest.Storage.*;
 @DisplayName("Тесты для формы авторизации lichess.org")
 public class LichessTest extends BaseTest {
     LoginPage loginPage = new LoginPage(Url);
+    public String randomString = RandomStringUtils.randomAlphanumeric(10);
     @Tag("puper")
     @DisplayName("Авторизация валидными данными")
     @Test

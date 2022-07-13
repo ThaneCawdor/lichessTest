@@ -11,5 +11,4 @@ public class Storage {
     public final static String translitLogin = "Naaaaaaа";
     public final static String translitPassword = "trollivаlli";
     public final static String sqlInjection = "a’ OR 1=1;--";
-    public final static String randomString = RandomStringUtils.randomAlphanumeric(10);
 }
