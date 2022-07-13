@@ -18,7 +18,7 @@ abstract public class BaseTest {
     void init(){
         setUp();
     }
-
+    //some changes in master
     @AfterEach
     void tearDown(){
         Selenide.closeWebDriver();
