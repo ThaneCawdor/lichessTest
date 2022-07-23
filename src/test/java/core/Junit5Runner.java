@@ -9,6 +9,6 @@ import org.junit.runner.RunWith;
 
 @RunWith(JUnitPlatform.class)
 @SelectClasses(LichessTest.class)
-@IncludeTags("super")
+@IncludeTags("puper")
 public class Junit5Runner {
 }

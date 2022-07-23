@@ -5,12 +5,34 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static lichessTest.Storage.*;
-@DisplayName("Тесты для формы авторизации lichess.org")
 public class LichessTest extends BaseTest {
     LoginPage loginPage = new LoginPage(Url);
     public String randomString = RandomStringUtils.randomAlphanumeric(10);
+    @DisplayName("Проверка отображения текста ошибки при вводе не валидных данных")
+    @ParameterizedTest(name = "Iteration #{index} -> Логин = {0}, Пароль = {1} ")
+    @CsvSource({"banana,      qwerty123",
+            "Naaaaaaa,       ' trollivalli'",
+            "Naaaaaaa,        qwerty123",
+            "banana,         trollivalli",
+            "'Naaaaaaa ',    trollivalli",
+            "Naaaaaaa,      'trollivalli '",
+            "' Naaaaaaa',    trollivalli",
+            "!»№;%:?*()_+.,}{}[];:’”`~, trollivalli",
+            "Naaaaaaa,        troLLivalli",
+            "Naaaaaaа,        troLLivalli",
+            "Naaaaaaa,        trollivаlli",
+            "a’ OR 1=1;--,    trollivalli",
+    })
+    public void paramTest(String param,String param1){
+        loginPage.setValueLogin(param);
+        loginPage.setValuePassword(param1);
+        loginPage.clickInputButton();
+        UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
+        unsuccesLoginPage.checkErrorMassage();
+    }
     @Tag("puper")
     @DisplayName("Авторизация валидными данными")
     @Test

@@ -26,4 +26,5 @@ public class LoginPage {
     public void clickInputButton(){
         inputButton.click();
     }
+
 }
