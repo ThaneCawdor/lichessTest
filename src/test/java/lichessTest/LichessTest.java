@@ -11,7 +11,7 @@ import static lichessTest.Storage.*;
 public class LichessTest extends BaseTest {
     LoginPage loginPage = new LoginPage(Url);
     public String randomString = RandomStringUtils.randomAlphanumeric(10);
-    @DisplayName("Проверка отображения текста ошибки при вводе не валидных данных")
+   /* @DisplayName("Проверка отображения текста ошибки при вводе не валидных данных")
     @ParameterizedTest(name = "Iteration #{index} -> Логин = {0}, Пароль = {1} ")
     @CsvSource({"banana,      qwerty123",
             "Naaaaaaa,       ' trollivalli'",
@@ -32,7 +32,7 @@ public class LichessTest extends BaseTest {
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
-    }
+    }*/
     @Tag("puper")
     @DisplayName("Авторизация валидными данными")
     @Test
