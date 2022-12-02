@@ -1,13 +1,16 @@
 package lichessTest;
 
 import core.BaseTest;
+import io.qameta.allure.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+
 import static lichessTest.Storage.*;
+
+@Epic("UI тесты")
+@Feature("Страница авторизации")
 public class LichessTest extends BaseTest {
     LoginPage loginPage = new LoginPage(Url);
     public String randomString = RandomStringUtils.randomAlphanumeric(10);
@@ -33,8 +36,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }*/
+    @Story("Авторизация")
+    @Description("Авторизоваться валидными данными")
+    @DisplayName("Проверка авторизации валидными данными")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
     @Tag("puper")
-    @DisplayName("Авторизация валидными данными")
     @Test
     public void checkAutoValidData() {
         loginPage.setValueLogin(login);
@@ -43,8 +51,13 @@ public class LichessTest extends BaseTest {
         MainPage mainPage = new MainPage();
         mainPage.checkUserTag();
     }
+    @Story("Авторизация")
+    @Description("Авторизоваться невалидными данными")
+    @DisplayName("Проверка авторизации невалидными данными")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
     @Tag("super")
-    @DisplayName("Авторизация невалидными данными")
     @Test
     public void checkAutoNotValidData() {
         loginPage.setValueLogin(randomString);
@@ -53,8 +66,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Авторизоваться невалидным паролем")
     @DisplayName("Неверный пароль")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void checkNotValidOneP(){
         loginPage.setValueLogin(login);
@@ -63,8 +81,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Авторизоваться невалидным логином")
     @DisplayName("Неверный логин")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void checkNotValidLogin() {
         loginPage.setValueLogin(randomString);
@@ -73,8 +96,16 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("super")
+    @TmsLink("rgd-25")
+    @Issue("f135")
+    @Flaky
+    @Story("Авторизация")
+    @Description("Авторизоваться с пробелом после логина")
     @DisplayName("Пробел после логина")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void spaceAfterLogin() {
         loginPage.setValueLogin(login + " ");
@@ -83,8 +114,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Авторизоваться с пробелом после пароля")
     @DisplayName("Пробел после пароля")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void spaceAfterPassword() {
         loginPage.setValueLogin(login);
@@ -93,8 +129,14 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("super")
+
+    @Story("Авторизация")
+    @Description("Авторизоваться с пробелом до логина")
     @DisplayName("Пробел до логина")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void spaceBeforeLogin() {
         loginPage.setValueLogin(" " + login);
@@ -103,8 +145,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Авторизоваться с пробелом до пароля")
     @DisplayName("Пробел до пароля")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void spaceBeforePassword() {
         loginPage.setValueLogin(login);
@@ -113,8 +160,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Проверка на спец символы")
     @DisplayName("Спец символы")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void specChar(){
         loginPage.setValueLogin(specialCharacters);
@@ -123,8 +175,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("puper")
+    @Story("Авторизация")
+    @Description("Проверка на чувствительность логина к регистру")
     @DisplayName("Чувствительность логина к регистру")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("puper")
     @Test
     public void registerLogin(){
         loginPage.setValueLogin(registerLogin);
@@ -133,8 +190,13 @@ public class LichessTest extends BaseTest {
         MainPage mainPage = new MainPage();
         mainPage.checkUserTag();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Проверка на чувствительность пароля к регистру")
     @DisplayName("Чувствительность пароля к регистру")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void registerPassword(){
         loginPage.setValueLogin(login);
@@ -143,16 +205,26 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Ввод пустой формы")
     @DisplayName("Пустой ввод")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void emptyInput(){
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkFindfMe();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Ввод с пустым паролем")
     @DisplayName("Пустой ввод-пароль")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void oneOfIsEmptyPassword(){
         loginPage.setValueLogin(login);
@@ -160,8 +232,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkFindfMe();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Ввод с пустым логином")
     @DisplayName("Пустой ввод-логин")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void oneOfIsEmptyLogin(){
         loginPage.setValuePassword(password);
@@ -169,8 +246,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkFindfMe();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Проверка на чувствительность логина к транслиту")
     @DisplayName("Чувствительность к транслиту-логин")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void translitLogin(){
         loginPage.setValueLogin(translitLogin);
@@ -179,8 +261,13 @@ public class LichessTest extends BaseTest {
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
     }
-    @Tag("super")
+    @Story("Авторизация")
+    @Description("Проверка на чувствительность пароля к транслиту")
     @DisplayName("Чувствительность к транслиту-пароль")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void translitPassword(){
         loginPage.setValueLogin(login);
@@ -188,8 +275,14 @@ public class LichessTest extends BaseTest {
         loginPage.clickInputButton();
         UnsuccesLoginPage unsuccesLoginPage = new UnsuccesLoginPage();
         unsuccesLoginPage.checkErrorMassage();
-    }@Tag("super")
+    }
+    @Story("Авторизация")
+    @Description("Проверка защиты от SQL иньекции")
     @DisplayName("SQL иньекция логин")
+    @Severity(value = SeverityLevel.CRITICAL)
+    @Owner(value = "Вадим")
+    @Link(name = "Ссылка", url = "http://yandex.ru")
+    @Tag("super")
     @Test
     public void sqlInjection(){
         loginPage.setValueLogin(sqlInjection);
