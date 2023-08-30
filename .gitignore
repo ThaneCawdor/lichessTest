@@ -4,4 +4,4 @@
 /allure-results
 /.allure/
 .idea
-logs/
+logs/.DS_Store
