@@ -3,7 +3,7 @@
 /build/reports/tests
 /allure-results
 /.allure/
-.idea
-logs/.DS_Store
-.DS_Store
+/.idea
+/logs/.DS_Store
+/.DS_Store
 
