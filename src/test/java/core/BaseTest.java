@@ -28,4 +28,5 @@ abstract public class BaseTest {
         Allure.getLifecycle().addAttachment("screenshot","image/png","png",((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES));
         Selenide.closeWebDriver();
     }
+    //изменения для коммита
 }
